@@ -1,6 +1,6 @@
 
 <template> 
-  login
+  <RouterView />
 </template>
 
 <script setup lang="ts">

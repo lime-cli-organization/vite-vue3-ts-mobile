@@ -1,11 +1,11 @@
 
 <template> 
-  <van-button color="#7232dd" plain  size="mini">单色按钮</van-button>
-  <SvgIcon />
+  <div>
+    <RouterView />
+  </div>
 </template>
 
 <script setup lang="ts">
-import SvgIcon from "@/views/example/SvgIcon.vue";
 </script>
 
 <style lang="less">

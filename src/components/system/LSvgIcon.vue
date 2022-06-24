@@ -1,6 +1,6 @@
 <template>
-  <svg  :class="svgClass" aria-hidden="true">
-    <use :xlink:href="symbolId"  :style="`color:${color}; fill:${color}; stroke:${color}`"/>
+  <svg :class="svgClass" aria-hidden="true" :style="`width:${size}px;height:${size}px;`">
+    <use :xlink:href="symbolId"  :style="`color:${color}; fill:${color}; stroke:${color};`"/>
   </svg>
 </template>
 
@@ -23,6 +23,9 @@ export default defineComponent({
       default: '#333',
     },
     className: {
+      type: String,
+    },
+    size: {
       type: String,
     }
   },
