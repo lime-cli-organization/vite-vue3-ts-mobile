@@ -1,16 +1,16 @@
 
-<template> 
+<template>
   <div class="switch">
-    <van-button color="#7232dd" plain  size="mini" @click="switchPro('/pro')">project</van-button>
-    <van-button color="#7232dd" plain  size="mini" @click="switchPro('/example')">example</van-button>
+    <van-button color="#7232dd" plain size="mini" @click="switchPro('/pro/login')">project</van-button>
+    <van-button color="#7232dd" plain size="mini" @click="switchPro('/example')">example</van-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import {  useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
-const switchPro = (rootPath: string) => { 
+const switchPro = (rootPath: string) => {
   router.push({
     path: rootPath
   })
@@ -18,7 +18,7 @@ const switchPro = (rootPath: string) => {
 </script>
 
 <style lang="less" scoped>
-.switch{
+.switch {
   height: 200px;
   width: 100vw;
   display: flex;

@@ -1,11 +1,10 @@
 
-<template> 
+<template>
   <div class="LTabbar">
-    <div class="bar_item" v-for="item in list" :key="item.path" 
-      @click="switchTab(item.path)"
+    <div class="bar_item" v-for="item in list" :key="item.path" @click="switchTab(item.path)"
       :class="currentActive === item.path ? 'active' : ''">
-        <LSvgIcon :name=" item.svgName" size="24" :color="currentActive === item.path ? '#FF861B' : '' "/>
-        <span class="text">{{item.text}}</span>
+      <LSvgIcon :name="item.svgName" size="24" :color="currentActive === item.path ? '#FF861B' : ''" />
+      <span class="text">{{ item.text }}</span>
     </div>
   </div>
 </template>
@@ -19,11 +18,11 @@ import type { Router } from 'vue-router'
 const props = defineProps({
   list: {
     type: Array<tabItem>,
-    default: () => { 
+    default: () => {
       return {
         path: '',
         text: '',
-        svgName:''
+        svgName: ''
       }
     }
   }
@@ -31,7 +30,7 @@ const props = defineProps({
 
 const router: Router = useRouter();
 
-let currentActive =  ref(props.list[0].path);
+let currentActive = ref(props.list[0].path);
 watch(
   () => router.currentRoute.value.path,
   (toPath) => {
@@ -41,7 +40,7 @@ watch(
       }
     })
   },
-  {immediate:true, deep: true }
+  { immediate: true, deep: true }
 );
 
 
@@ -53,7 +52,7 @@ const switchTab = (path: string) => {
 </script>
 
 <style lang="less">
-.LTabbar{
+.LTabbar {
   position: fixed;
   bottom: 0;
   height: 100px;
@@ -64,14 +63,17 @@ const switchTab = (path: string) => {
   justify-content: space-around;
   background: #FFFFFF;
   box-shadow: 0px -10px 45px 0px #F3F5F9;
+
   .bar_item {
     display: flex;
     align-items: center;
     flex-direction: column;
-    .text{
+
+    .text {
       margin-top: 12px;
     }
   }
+
   .active>.text {
     color: @primary;
     font-weight: bold;

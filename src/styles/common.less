@@ -2,6 +2,14 @@
   background: @primary;
   color: white;
 }
+.btn.plain {
+  background: white;
+  color: @primary;
+  border: 1px solid @primary;
+}
+.btn.text  {
+  color: @primary;
+}
 .btn.de_active {
   background-color: #bababa;
   color: white;
@@ -10,7 +18,24 @@
   color: white;
   background: #C4CAD3;
 }
-
+.btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .svg-icon{
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+}
+.btn.small  {
+  padding: 8px 20px;
+  border-radius: 48px;
+}
+.btn.regular {
+  padding: 12px 24px;
+  font-size: 24px;
+  border-radius: 50px;
+}
 .gradient{
   background: linear-gradient(90deg, #FF861B 0%, #F6C460 100%);
 }
