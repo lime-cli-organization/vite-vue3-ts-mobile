@@ -2,19 +2,31 @@
   <div class="topic_item" :class="level === 0 ? 'first' : ''">
     <div class="question" v-html="data?.question"></div>
     <!-- 是否存在子题 -->
-    <template v-if="!data?.hasSub">
+    <template v-if="data.topicSub && data.topicSub.length > 0">
+      <template v-for="item in data.topicSub">
+        <TopicItem :data="item" :level="level + 1" :innerAnswer="innerAnswer" :showAnswer="showAnswer"
+          @onSuccess="setLike">
+          <template #operationLeft="item">
+            <slot name="operationLeft" v-bind="item"></slot>
+          </template>
+        </TopicItem>
+      </template>
+    </template>
+    <template v-else>
       <!-- 未下载是否隐藏答案和解析 -->
       <template v-if="showAnswer">
         <div class="answer row innerAnswer" v-if="innerAnswer">
           <span class="label">【答案】</span>
           <span class="value" v-html="data?.answer"></span>
         </div>
-        <div class="operation_row" :class="data.isRight === undefined ? 'tip' : ''">
+        <div class="operation_row" :class="innerAnswer && data.isRight === undefined ? 'tip' : ''">
           <div class="left">
-            <slot name="operationLeft"></slot>
+            <slot name="operationLeft" v-bind="data"></slot>
           </div>
           <div class="right">
-            <div class="btn small " :class="isShow ? 'de_active' : 'active '" @click="toggle">{{ isShow ? '收起' : '解析' }}
+            <div class="btn small " :class="isShow ? 'de_active' : 'active '" @click="toggle">{{ isShow ?
+                '收起' : '解析'
+            }}
             </div>
             <img v-if="!isLike" @click.stop="setLike(true)" src="@/assets/star.png" alt="收藏">
             <img v-if="isLike" @click.stop="setLike(false)" src="@/assets/star_active.png" alt="取消收藏">
@@ -46,14 +58,6 @@
         </template>
       </template>
     </template>
-    <template v-if="data?.topicSub" v-for="item in data.topicSub">
-      <TopicItem :data="item" :level="level + 1" :innerAnswer="innerAnswer" :showAnswer="showAnswer"
-        @onSuccess="setLike">
-        <template #operationLeft>
-          <LRadio v-model="item.isRight" @change="setRight" />
-        </template>
-      </TopicItem>
-    </template>
   </div>
 </template>
 
@@ -61,10 +65,10 @@
 import { Paper } from "@/apis/Paper";
 import { SetLike } from "@/apis/Topic";
 import { defineComponent, PropType, ref } from "vue";
-import LRadio from '../components/LRadio.vue';
+import LRadio from '@/components/system/LRadio.vue';
 export default defineComponent({
   name: "TopicItem",
-  components: { LRadio },
+  components: { LRadio, },
   props: {
     data: {
       required: true,
@@ -84,9 +88,7 @@ export default defineComponent({
   },
   emits: ['onSuccess'],
   // ctx: {attrs, emit, expose, slots}
-  setup(props, { emit, slots }) {
-    const { operationLeft } = slots;
-
+  setup(props, { emit }) {
     const { data: item } = props;
 
     const isLike = ref(item.isLike);
@@ -127,7 +129,6 @@ export default defineComponent({
       isLike,
       setLike,
       setRight,
-      operationLeft
     };
   },
 })
@@ -143,7 +144,7 @@ export default defineComponent({
     border-radius: 30px;
     overflow: hidden;
     margin: 30px auto;
-    border-bottom: none;
+    border: none;
 
     .topic_item:last-of-type {
       border-bottom: none;

@@ -24,7 +24,7 @@ class HttpRequest {
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
         const { data } = response;
-        // #TODO download 获取文件名时需要response header
+        // #TODO download 获取文件名时可能需要response header
         return data;
       },
       (error: AxiosError) => {

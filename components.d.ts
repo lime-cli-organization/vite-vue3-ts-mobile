@@ -6,16 +6,22 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    LCheckbox: typeof import('./src/components/system/LCheckbox.vue')['default']
+    LCheckboxGroup: typeof import('./src/components/system/LCheckboxGroup.vue')['default']
+    LRadio: typeof import('./src/components/system/LRadio.vue')['default']
     LSvgIcon: typeof import('./src/components/system/LSvgIcon.vue')['default']
     LTabbar: typeof import('./src/components/system/LTabbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VanButton: typeof import('vant/es')['Button']
     VanCellGroup: typeof import('vant/es')['CellGroup']
+    VanCheckbox: typeof import('vant/es')['Checkbox']
+    VanCheckboxGroup: typeof import('vant/es')['CheckboxGroup']
     VanDropdownItem: typeof import('vant/es')['DropdownItem']
     VanDropdownMenu: typeof import('vant/es')['DropdownMenu']
     VanField: typeof import('vant/es')['Field']
     VanImage: typeof import('vant/es')['Image']
+    VanNotify: typeof import('vant/es')['Notify']
     VanRadio: typeof import('vant/es')['Radio']
     VanRadioGroup: typeof import('vant/es')['RadioGroup']
   }

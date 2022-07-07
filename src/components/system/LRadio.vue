@@ -3,8 +3,8 @@
     <van-radio :name="item.value" checked-color="#FF861B" icon-size="18" v-for="item in renderArr">
       <slot name="text">{{ item.label }}</slot>
       <template #icon="props">
-        <LSvgIcon v-if="props.checked" name="check_active" size="18" />
-        <LSvgIcon v-else name="uncheck" size="18" />
+        <LSvgIcon v-if="props.checked" name="radio_check" size="18" />
+        <LSvgIcon v-else name="radio" size="18" />
       </template>
     </van-radio>
   </van-radio-group>

@@ -20,7 +20,7 @@
         <div class="right">
           <div class="btn text" @click="toInfo(item)">查看</div>
           <div class="btn regular plain">
-            <LSvgIcon name="check" size="14" color="#FF861B" /><span>批改</span>
+            <LSvgIcon name="correct" size="14" color="#FF861B" /><span>批改</span>
           </div>
           <div class="btn regular active">
             <LSvgIcon class-name="lock" name="lock" size="14" color="#ffffff" /><span>下载</span>

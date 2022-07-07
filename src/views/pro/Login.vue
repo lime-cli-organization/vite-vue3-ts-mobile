@@ -74,7 +74,7 @@ const login = async () => {
     width: 180px;
   }
 
-  ::v-deep .van-cell-group {
+  :deep(.van-cell-group) {
     width: 300px;
     margin-bottom: 12px;
 

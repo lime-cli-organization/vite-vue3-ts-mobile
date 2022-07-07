@@ -1,6 +1,6 @@
 <template>
   <svg :class="svgClass" aria-hidden="true" :style="`width:${size}px;height:${size}px;`">
-    <use :xlink:href="symbolId"  :style="`color:${color}; fill:${color}; stroke:${color};`"/>
+    <use :xlink:href="symbolId" :style="`color:${color}; fill:${color}; stroke:${color};`" />
   </svg>
 </template>
 
@@ -32,7 +32,7 @@ export default defineComponent({
   setup(props) {
     const symbolId = computed(() => `#${props.prefix}-${props.name}`)
     const svgClass = computed(() => props.className ? `svg-icon ${props.className}` : 'svg-icon')
-    return { svgClass,symbolId }
+    return { svgClass, symbolId }
   },
 })
 </script>
@@ -42,6 +42,5 @@ export default defineComponent({
   width: 1em;
   height: 1em;
   fill: currentColor;
-  vertical-align: middle;
 }
 </style>

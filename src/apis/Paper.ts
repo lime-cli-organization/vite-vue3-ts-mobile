@@ -54,8 +54,10 @@ export namespace Paper {
     parentId: number;
     question: string;
     topicId: number;
+    inputTime?: number;
     topicSub?: ITopicItem[];
     isRight?: boolean;
+    isCheck?: boolean;
   }
 
   interface IPaperAreaTopicItem {

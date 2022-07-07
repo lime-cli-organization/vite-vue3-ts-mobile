@@ -13,6 +13,8 @@ import resolveExternalsPalugin from 'vite-plugin-resolve-externals';
 // vant 按需引入
 import Components from 'unplugin-vue-components/vite';
 import { VantResolver } from 'unplugin-vue-components/resolvers';
+// 使用jsx
+import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
@@ -54,6 +56,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     },
     plugins: [
       vue(),
+      vueJsx(),
       VueSetupExtend(),
       createSvgIconsPlugin({
         // 指定需要缓存的图标文件夹

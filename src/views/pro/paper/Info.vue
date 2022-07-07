@@ -4,7 +4,7 @@
       <p class="title">{{ index + 1 }}、{{ item.title }}</p>
       <TopicItem v-for="topic in item.topics" :data="topic" :innerAnswer="true" :showAnswer="true" :level="0"
         @onSuccess="setLike">
-        <template #operationLeft>
+        <template #operationLeft="slotProps">
           <LRadio v-model="topic.isRight" @change="setRight" />
         </template>
       </TopicItem>
@@ -14,10 +14,12 @@
 </template>
 <script setup lang="ts">
 import { GetTopicList, Paper } from '@/apis/Paper';
-import { onMounted, reactive } from 'vue';
+import { getCurrentInstance, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import TopicItem from '../components/TopicItem.vue';
-import LRadio from '../components/LRadio.vue';
+import LRadio from '@/components/system/LRadio.vue';
+// 获取挂载的全局自定义变量
+const global = getCurrentInstance()!.appContext.config.globalProperties;
 
 const route = useRoute();
 
@@ -25,6 +27,7 @@ const state = reactive({
   paperInfo: {} as Paper.IPaperInfo,
   topicAnswerInfo: [] as Paper.IAreaItem[]
 })
+
 
 onMounted(async () => {
   const { data: { paperInfo, topicAnswerInfo } } = await GetTopicList({ id: route.query.id })
@@ -48,7 +51,8 @@ const submit = () => {
     topics = topics.concat(parseData(item.subArea || []))
   })
   const topicIdArr = topics.map(item => { return { topicId: item.topicId, isRight: item.isRight } });
-  console.log(topicIdArr);
+  const flag = topicIdArr.some((item) => typeof item.isRight !== 'boolean');
+  if (flag) return global.$notify({ type: 'danger', message: '通知内容' });
 }
 const parseData = (list: Paper.ITopicItem[] | undefined) => {
   if (list) {
@@ -76,17 +80,5 @@ const parseData = (list: Paper.ITopicItem[] | undefined) => {
     font-size: 30px;
     font-weight: bold;
   }
-}
-
-.fix {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 100px;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  font-size: 32px;
-  font-weight: bold;
 }
 </style>
