@@ -4,7 +4,7 @@
       <LCheckbox v-model="item.isCheck" />
       <TopicItem :level="0" :data="item" :showAnswer="true">
         <template #operationLeft="slotProps">
-          {{ slotProps.inputTime }}
+          {{ $filter.format(slotProps.inputTime) }}
         </template>
       </TopicItem>
     </div>
@@ -15,9 +15,12 @@
 <script setup lang="ts">
 import TopicItem from '../../components/TopicItem.vue';
 import { GetWrongTopicList } from "@/apis/Topic";
-import { onMounted, reactive } from 'vue';
+import { getCurrentInstance, onMounted, reactive } from 'vue';
 import { Paper } from '@/apis/Paper';
 import LCheckbox from '@/components/system/LCheckbox.vue';
+
+const $filter = getCurrentInstance()!.appContext.config.globalProperties.$filter;
+console.log($filter);
 
 
 const state = reactive({

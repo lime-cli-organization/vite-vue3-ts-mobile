@@ -24,6 +24,12 @@ import {
   Notify,
   Checkbox,
   CheckboxGroup,
+  Form,
+  Field,
+  Picker,
+  Calendar,
+  PullRefresh,
+  List,
 } from 'vant';
 // ant 中有个别组件是以函数的形式提供的，包括 Toast，Dialog，Notify 和 ImagePreview 组件。
 // 在使用函数组件时，unplugin-vue-components 无法自动引入对应的样式，因此需要手动引入样式。
@@ -37,9 +43,24 @@ app
   .use(Radio)
   .use(CheckboxGroup)
   .use(Checkbox)
+  .use(Form)
+  .use(Field)
+  .use(Picker)
+  .use(Calendar)
+  .use(PullRefresh)
+  .use(List)
   .use(Notify);
 
 // 挂载全局自定义变量
 // app.config.globalProperties
+
+// dayjs
+import dayjs from 'dayjs';
+// 全局过滤器
+app.config.globalProperties.$filter = {
+  format(value: number) {
+    return value && dayjs(value * 1000).format('YYYY-MM-DD HH:mm:ss');
+  },
+};
 
 app.mount('#app');

@@ -1,33 +1,34 @@
 <template>
   <div class="search">
-    <van-dropdown-menu active-color="#1989fa">
-      <van-dropdown-item v-model="params.levelId" :options="searchList.course" />
-      <van-dropdown-item v-model="params.grade" :options="searchList.grade" />
-      <van-dropdown-item v-model="params.term" :options="searchList.term" />
-      <van-dropdown-item v-model="params.grade" :options="searchList.grade" />
-    </van-dropdown-menu>
+    <SearchRow v-if="searchList.data.length > 0" :data="searchList.data" :index="0" />
   </div>
   <div class="list">
-    <div class="item" v-for="item in state.paperList ">
-      <div class="top">
-        <span class="tag">{{ item.paperType }}</span>
-        {{ item.name }}
-      </div>
-      <div class="bottom">
-        <div class="left">
-          <span>{{ item.inputTime }}</span>
-        </div>
-        <div class="right">
-          <div class="btn text" @click="toInfo(item)">查看</div>
-          <div class="btn regular plain">
-            <LSvgIcon name="correct" size="14" color="#FF861B" /><span>批改</span>
+    <van-pull-refresh v-model="state.isRefreshing" @refresh="onRefresh">
+      <van-list v-model:loading="state.isLoading" :finished="state.isFinished" finished-text="没有更多了" @load="getList"
+        :immediate-check="false">
+        <div class="item" v-for="item in state.list ">
+          <div class="top">
+            <span class="tag">{{ item.paperType }}</span>
+            {{ item.name }}
           </div>
-          <div class="btn regular active">
-            <LSvgIcon class-name="lock" name="lock" size="14" color="#ffffff" /><span>下载</span>
+          <div class="bottom">
+            <div class="left">
+              <span>{{ item.inputTime }}</span>
+            </div>
+            <div class="right">
+              <div class="btn text" @click="toInfo(item)">查看</div>
+              <div class="btn regular plain">
+                <LSvgIcon name="correct" size="14" color="#FF861B" /><span>批改</span>
+              </div>
+              <div class="btn regular active">
+                <LSvgIcon class-name="lock" name="lock" size="14" color="#ffffff" /><span>下载</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </van-list>
+    </van-pull-refresh>
+
   </div>
 </template>
 
@@ -36,9 +37,18 @@
 import { GetPubicList, Paper } from '@/apis/Paper';
 import { GetCourse } from '@/apis/Paper.ts';
 import LSvgIcon from '@/components/system/LSvgIcon.vue';
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from "vue-router";
+import SearchRow from '../components/SearchRow.vue';
 const router = useRouter();
+
+const searchList = reactive({
+  course: [],
+  grade: [],
+  term: [],
+  bookType: [],
+  data: []
+})
 
 const params = reactive({
   levelId: 0,
@@ -47,25 +57,46 @@ const params = reactive({
   page: 1,
   term: ''
 })
-const searchList = reactive({
-  course: [],
-  grade: [],
-  term: [],
-  bookType: []
+const state = reactive({
+  list: [] as Paper.IPaperItem[],
+  total: 0,
+  isRefreshing: false,
+  isLoading: false,
+  isFinished: false,
 })
 
-const state = reactive({
-  paperList: [] as Paper.IPaperItem[]
-})
 
 onMounted(async () => {
   const { data: { checkGrade, checkTerm, list } } = await GetCourse();
   params.grade = checkGrade;
-  params.term = "上册";
+  params.term = '上册';
   params.levelId = list[0].id;
-  const { data } = await GetPubicList(params);
-  state.paperList = data;
+  searchList.data = list;
+  getList();
 })
+
+const getList = async () => {
+  const { data, total } = await GetPubicList(params);
+  if (data.length === 0) {
+    state.isFinished = true;
+  }
+  params.page += 1;
+  state.list = state.list.concat(data);
+  state.total = total;
+  state.isLoading = false;
+  if (state.list.length >= state.total) {
+    console.log(state.list.length, state.total, state.list.length >= state.total);
+    state.isFinished = true;
+  }
+}
+
+const onRefresh = () => {
+  params.page = 1;
+  state.list = [];
+  state.isRefreshing = false;
+  state.isLoading = true;
+  getList();
+}
 
 
 const toInfo = (item: Paper.IPaperItem) => {
@@ -95,16 +126,12 @@ const toInfo = (item: Paper.IPaperItem) => {
   border-radius: 30px;
 
   .top {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
     color: @textPrimary;
     font-weight: bold;
     line-height: 1.5;
     font-size: 30px;
 
     .tag {
-      display: inline-block;
       margin-right: 10px;
       padding: 0 18px;
       background: #EAF4FF;
@@ -112,7 +139,7 @@ const toInfo = (item: Paper.IPaperItem) => {
       border-radius: 16px;
       font-size: 20px;
       color: #49A3FF;
-      flex-shrink: 0;
+      float: left;
     }
   }
 

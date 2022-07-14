@@ -1,8 +1,9 @@
-interface IResult {
+export interface IResult {
   code: number;
   msg: string;
+  total?: number;
 }
 
-interface IResultData<T = any> extends IResult {
+export interface IResultData<T = any> extends IResult {
   data: T;
 }

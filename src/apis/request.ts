@@ -4,7 +4,7 @@ import { Notify } from 'vant';
 import { getCookie } from '@/utils/storage';
 
 const config: AxiosRequestConfig = {
-  baseURL: 'http://114.55.115.86:8021',
+  baseURL: '', //http://114.55.115.86:8001
   timeout: 5000,
   withCredentials: true,
 };

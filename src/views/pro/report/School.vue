@@ -24,7 +24,7 @@
         <div class="item"><span class="dot blue"></span>提升</div>
       </div>
       <div class="list">
-        <div class="item"  v-for="item in 3">
+        <div class="item" v-for="item in 3">
           <div class="top">1. 百分数和分数、小数的互化百分数和</div>
           <div class="bottom">
             <div class="left">
@@ -191,14 +191,12 @@ span.dot {
     }
 
     .top {
-      display: flex;
-      align-items: center;
       padding-top: 24px;
       color: #282828;
       font-size: 28px;
 
       .tag {
-        display: inline-block;
+        float: left;
         margin-right: 12px;
         border-radius: 24px 0 24px 0;
         font-size: 24px;
@@ -225,6 +223,7 @@ span.dot {
         }
       }
     }
+
     .dot {
       &:not(:first-child) {
         margin-left: 24px;

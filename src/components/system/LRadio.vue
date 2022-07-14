@@ -28,13 +28,13 @@ const attrs = useAttrs();
 </script>
 
 <style lang="less" scoped>
-::v-deep .van-radio__icon {
+:v-deep(.van-radio__icon) {
   height: auto;
   line-height: 100%;
   display: flex;
 }
 
-::v-deep .van-radio__label {
+:v-deep(.van-radio__label) {
   line-height: 18px;
 }
 </style>

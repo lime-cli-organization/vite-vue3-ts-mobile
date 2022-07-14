@@ -58,6 +58,11 @@ export const router = createRouter({
               component: () => import('@/views/pro/exercise/combine/Index.vue'),
             },
             {
+              path: '/pro/exercise/combine/confirm',
+              name: 'CombineConfirm',
+              component: () => import('@/views/pro/exercise/combine/Confirm.vue'),
+            },
+            {
               path: '/pro/paper/info',
               name: 'PaperInfo',
               component: () => import('@/views/pro/paper/Info.vue'),

@@ -16,10 +16,30 @@ import { VantResolver } from 'unplugin-vue-components/resolvers';
 // 使用jsx
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
+// baseURL
+import { authorization, api } from './public/config/baseUrl.js';
+
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
   const isBuild = command === 'build';
   return {
+    server: {
+      host: '192.168.15.3',
+      port: 3000,
+      open: true,
+      proxy: {
+        '/authorization': {
+          target: authorization,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/authorization/, ''),
+        },
+        '/api': {
+          target: api,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+    },
     css: {
       preprocessorOptions: {
         less: {

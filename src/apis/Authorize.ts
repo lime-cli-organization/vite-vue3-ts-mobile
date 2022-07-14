@@ -25,12 +25,12 @@ export namespace Authorize {
 }
 
 export const GetImageCode = () => {
-  return service.get<Authorize.IImageCodeResult>('/api/Authorize/GetImage');
+  return service.get<Authorize.IImageCodeResult>('/authorization/GetImage');
 };
 
 export const Login = (data: Authorize.ILoginParams) => {
   return service.post<Authorize.ILoginResult>(
-    `/api/Authorize/LoginWithCode?${translateParams(data)}`,
+    `/authorization/LoginWithCode?${translateParams(data)}`,
     data,
   );
 };
