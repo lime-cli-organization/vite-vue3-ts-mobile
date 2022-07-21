@@ -1,5 +1,5 @@
-type tabItem = {
-  path: string,
-  text: string,
-  svgName: string,
-}
+export type tabItem = {
+  path: string;
+  text: string;
+  svgName: string;
+};

@@ -18,10 +18,6 @@ export namespace Authorize {
     key: string;
     code: string;
   }
-
-  export interface ILoginResult {
-    data: string;
-  }
 }
 
 export const GetImageCode = () => {
@@ -29,8 +25,5 @@ export const GetImageCode = () => {
 };
 
 export const Login = (data: Authorize.ILoginParams) => {
-  return service.post<Authorize.ILoginResult>(
-    `/authorization/LoginWithCode?${translateParams(data)}`,
-    data,
-  );
+  return service.post<string[]>(`/authorization/LoginWithCode?${translateParams(data)}`, data);
 };

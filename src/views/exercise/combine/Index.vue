@@ -15,7 +15,7 @@ import { reactive, ref } from 'vue';
 import ErrorList from './ErrorTopic.vue';
 import PointList from './Point.vue';
 import WeakList from './Weak.vue';
-import CourseCondition from '../../components/CourseCondition.vue';
+import CourseCondition from '../../../components/CourseCondition.vue';
 
 const currentComp = ref('PointList')
 const changeComp = (type: string) => {

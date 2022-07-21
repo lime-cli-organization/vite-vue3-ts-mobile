@@ -4,6 +4,6 @@ export interface IResult {
   total?: number;
 }
 
-export interface IResultData<T = any> extends IResult {
+export interface IResultData<T> extends IResult {
   data: T;
 }

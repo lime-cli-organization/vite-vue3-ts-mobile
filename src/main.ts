@@ -11,8 +11,13 @@ import 'virtual:svg-icons-register';
 import LSvgIcon from '@/components/system/LSvgIcon.vue';
 app.component('LSvgIcon', LSvgIcon);
 // 路由
-import { router } from '@/route/index.ts';
+import { router } from '@/route/index';
 app.use(router);
+// pinia 全局状态管理
+import store from '@/store/index';
+app.use(store);
+// 动画库
+import 'animate.css';
 // vant-ui
 import {
   Button,
@@ -56,10 +61,11 @@ app
 
 // dayjs
 import dayjs from 'dayjs';
+import { Vue } from 'vue-demi';
 // 全局过滤器
 app.config.globalProperties.$filter = {
-  format(value: number) {
-    return value && dayjs(value * 1000).format('YYYY-MM-DD HH:mm:ss');
+  format(value: number, format: string = 'YYYY-MM-DD HH:mm:ss') {
+    return value && dayjs(value * 1000).format(format);
   },
 };
 

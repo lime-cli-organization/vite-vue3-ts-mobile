@@ -16,7 +16,7 @@
 import { GetTopicList, Paper } from '@/apis/Paper';
 import { getCurrentInstance, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import TopicItem from '../components/TopicItem.vue';
+import TopicItem from '../../components/TopicItem.vue';
 import LRadio from '@/components/system/LRadio.vue';
 // 获取挂载的全局自定义变量
 const global = getCurrentInstance()!.appContext.config.globalProperties;

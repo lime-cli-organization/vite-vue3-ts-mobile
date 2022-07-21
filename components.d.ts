@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CourseCondition: typeof import('./src/components/CourseCondition.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Index: typeof import('./src/components/system/LECharts/Index.vue')['default']
     LCheckbox: typeof import('./src/components/system/LCheckbox.vue')['default']
@@ -12,9 +13,10 @@ declare module '@vue/runtime-core' {
     LECharts: typeof import('./src/components/system/LECharts/LECharts.vue')['default']
     LRadio: typeof import('./src/components/system/LRadio.vue')['default']
     LSvgIcon: typeof import('./src/components/system/LSvgIcon.vue')['default']
-    LTabbar: typeof import('./src/components/system/LTabbar.vue')['default']
+    LTabbar: typeof import('./src/components/system/LTabbar/LTabbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TopicItem: typeof import('./src/components/TopicItem.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCalendar: typeof import('vant/es')['Calendar']
     VanCellGroup: typeof import('vant/es')['CellGroup']

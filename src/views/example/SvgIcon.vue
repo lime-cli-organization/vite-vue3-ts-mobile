@@ -1,5 +1,5 @@
 <template>
-  <LSvgIcon name="home" class="svg_extenal" :color="color" @mouseover="mouseover" @mouseleave="mouseleave"/>
+  <LSvgIcon name="home" class="svg_extenal" :color="color" @mouseover="mouseover" @mouseleave="mouseleave" />
 </template>
 
 <script lang="ts" setup>
@@ -16,7 +16,7 @@ const mouseleave = () => {
 </script>
 
 <style lang="less" scoped>
- .svg_extenal{
+.svg_extenal {
   color: red;
 }
 </style>

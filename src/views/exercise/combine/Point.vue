@@ -10,7 +10,7 @@
 import { GetBook } from '@/apis/Cache';
 import type { Cache } from '@/apis/Cache'
 import { onMounted, reactive } from 'vue';
-import LCheckboxGroup from '../../../../components/system/LCheckboxGroup.vue';
+import LCheckboxGroup from '@/components/system/LCheckboxGroup.vue';
 import { useRouter } from 'vue-router';
 
 defineProps({
@@ -51,7 +51,10 @@ const getCheckedId = (arr: Cache.IBookItem[], ret: number[]): number[] => {
 const router = useRouter();
 const toConfirmCombine = () => {
   router.push({
-    path: '',
+    path: '/exercise/combine/confirm',
+    query: {
+      name: '知识点组卷'
+    }
   })
 }
 

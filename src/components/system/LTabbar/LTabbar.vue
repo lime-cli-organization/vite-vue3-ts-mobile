@@ -11,9 +11,10 @@
 
 <script setup lang="ts">
 import { watch, ref } from 'vue';
-import LSvgIcon from './LSvgIcon.vue';
+import LSvgIcon from '../LSvgIcon.vue';
 import { useRouter, } from 'vue-router'
 import type { Router } from 'vue-router'
+import { tabItem } from '../typing';
 
 const props = defineProps({
   list: {

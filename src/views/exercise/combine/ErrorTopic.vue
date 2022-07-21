@@ -8,20 +8,20 @@
         </template>
       </TopicItem>
     </div>
-    <button class="btn active fix">确认提交</button>
+    <button class="btn active fix" @click="toConfirmCombine">确认提交</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import TopicItem from '../../components/TopicItem.vue';
+import TopicItem from '../../../components/TopicItem.vue';
 import { GetWrongTopicList } from "@/apis/Topic";
 import { getCurrentInstance, onMounted, reactive } from 'vue';
 import { Paper } from '@/apis/Paper';
 import LCheckbox from '@/components/system/LCheckbox.vue';
+import { useRouter } from 'vue-router';
 
 const $filter = getCurrentInstance()!.appContext.config.globalProperties.$filter;
-console.log($filter);
-
+const router = useRouter();
 
 const state = reactive({
   topics: [] as never[] as Paper.ITopicItem[]
@@ -30,17 +30,23 @@ const getWrongTopicList = async () => {
   const { data } = await GetWrongTopicList({
     courseId: 2, page: 1, term: '2021下', bookId: 0, isExam: false
   });
-  console.log(data);
-
   state.topics = data;
 }
 onMounted(() => {
   getWrongTopicList();
 })
+
+const toConfirmCombine = () => {
+  router.push({
+    path: '/exercise/combine/confirm',
+    query: {
+      name: '错题组卷'
+    }
+  })
+}
 </script>
 <style lang="less" scoped>
 .wrapper {
-
   padding: 0 38px 250px;
 
   .item {

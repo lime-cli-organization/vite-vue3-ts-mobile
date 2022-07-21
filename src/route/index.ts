@@ -1,76 +1,87 @@
-import { createRouter, createWebHashHistory, RouterOptions } from 'vue-router';
-import type { RouteRecordRaw } from 'vue-router';
+import {
+  createRouter,
+  createWebHashHistory,
+  RouteLocationNormalizedLoaded,
+  Router,
+  RouterOptions,
+} from 'vue-router';
+import type { IRouteRecordRaw } from 'vue-router';
+import md5 from 'js-md5';
 
-export const router = createRouter({
+export const router: Router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      path: '/',
-      name: 'Switch',
-      component: () => import('@/views/Switch.vue'),
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/Login.vue'),
+      meta: {
+        title: '登录',
+      },
     },
+    //--------------------分类目录-----练习--------------------
     {
-      path: '/pro',
-      component: () => import('@/views/pro/Layout.vue'),
-      redirect: '/pro/home',
+      path: '/exercise',
+      name: 'exercise',
+      redirect: {
+        name: 'CombineList',
+      },
+      component: () => import('@/views/Layout.vue'),
       children: [
         {
-          path: 'login',
-          name: 'Login',
-          component: () => import('@/views/pro/Login.vue'),
-          meta: {
-            title: '登录',
-          },
+          path: 'combine/index',
+          name: 'CombineList',
+          component: () => import('@/views/exercise/combine/Index.vue'),
         },
         {
-          path: 'index',
-          name: 'Index',
-          component: () => import('@/views/pro/Index.vue'),
-          children: [
-            {
-              path: '/pro/home',
-              name: 'Home',
-              component: () => import('@/views/pro/home/Home.vue'),
-            },
-            {
-              path: '/pro/exercise/panel',
-              name: 'Pannel',
-              component: () => import('@/views/pro/exercise/Panel.vue'),
-            },
-            {
-              path: '/pro/report/school',
-              name: 'ReportSchool',
-              component: () => import('@/views/pro/report/School.vue'),
-            },
-            {
-              path: '/pro/mine',
-              name: 'Mine',
-              component: () => import('@/views/pro/mine/Mine.vue'),
-            },
-            {
-              path: '/pro/paper/list',
-              name: 'PaperList',
-              component: () => import('@/views/pro/paper/List.vue'),
-            },
-            {
-              path: '/pro/exercise/combine/index',
-              name: 'CombineList',
-              component: () => import('@/views/pro/exercise/combine/Index.vue'),
-            },
-            {
-              path: '/pro/exercise/combine/confirm',
-              name: 'CombineConfirm',
-              component: () => import('@/views/pro/exercise/combine/Confirm.vue'),
-            },
-            {
-              path: '/pro/paper/info',
-              name: 'PaperInfo',
-              component: () => import('@/views/pro/paper/Info.vue'),
-              meta: {
-                hideTab: true,
-              },
-            },
-          ],
+          path: 'combine/confirm',
+          name: 'CombineConfirm',
+          component: () => import('@/views/exercise/combine/Confirm.vue'),
+          props: (route: RouteLocationNormalizedLoaded) => {
+            return {
+              name: md5(route.query.name as string),
+            };
+          },
+        },
+      ],
+    },
+
+    {
+      component: () => import('@/views/Layout.vue'),
+      redirect: '/home',
+      children: [
+        {
+          path: '/home',
+          name: 'Home',
+          component: () => import('@/views/home/Home.vue'),
+        },
+        {
+          path: '/exercise/panel',
+          name: 'Pannel',
+          component: () => import('@/views/exercise/Panel.vue'),
+        },
+        {
+          path: '/report/school',
+          name: 'ReportSchool',
+          component: () => import('@/views/report/School.vue'),
+        },
+        {
+          path: '/mine',
+          name: 'Mine',
+          component: () => import('@/views/mine/Mine.vue'),
+        },
+        {
+          path: '/paper/list',
+          name: 'PaperList',
+          component: () => import('@/views/paper/List.vue'),
+        },
+        {
+          path: '/paper/info',
+          name: 'PaperInfo',
+          component: () => import('@/views/paper/Info.vue'),
+          meta: {
+            hideTab: true,
+          },
         },
       ],
     },
@@ -82,5 +93,5 @@ export const router = createRouter({
         title: 'example',
       },
     },
-  ] as unknown as RouteRecordRaw[],
+  ] as unknown as IRouteRecordRaw[],
 } as RouterOptions);

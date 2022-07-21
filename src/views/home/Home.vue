@@ -5,7 +5,7 @@
         <van-image round width=".88rem" height=".88rem" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
         <div>
           <div class="name">
-            <span>小小周</span>
+            <span>{{ userInfo.RealName }}</span>
           </div>
           <div class="address">
             <span>杭州大禹小学</span>
@@ -61,6 +61,25 @@
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+import { useUser } from '@/store/modules/User'
+const userStore = useUser();
+const userInfo = userStore.parseToken;
+
+const router = useRouter();
+
+const toPaperList = () => {
+  router.push({
+    path: '/paper/list'
+  })
+}
+const toCombineList = () => {
+  router.push({
+    path: '/exercise/combine/index'
+  })
+}
+</script>
 <style lang="less" scoped>
 .wrapper {
   box-sizing: border-box;
@@ -186,18 +205,3 @@
   }
 }
 </style>
-<script setup lang="ts">
-import { useRouter } from 'vue-router';
-const router = useRouter();
-
-const toPaperList = () => {
-  router.push({
-    path: '/pro/paper/list'
-  })
-}
-const toCombineList = () => {
-  router.push({
-    path: '/pro/exercise/combine/index'
-  })
-}
-</script>

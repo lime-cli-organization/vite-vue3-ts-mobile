@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <SearchRow v-if="searchList.data.length > 0" :data="searchList.data" :index="0" />
+    <!-- <SearchRow v-if="searchList.data.length > 0" :data="searchList.data" :index="0" /> -->
   </div>
   <div class="list">
     <van-pull-refresh v-model="state.isRefreshing" @refresh="onRefresh">
@@ -13,7 +13,7 @@
           </div>
           <div class="bottom">
             <div class="left">
-              <span>{{ item.inputTime }}</span>
+              <span>{{ $filter.format(item.inputTime, 'YYYY-MM-DD') }}</span>
             </div>
             <div class="right">
               <div class="btn text" @click="toInfo(item)">查看</div>
@@ -28,7 +28,6 @@
         </div>
       </van-list>
     </van-pull-refresh>
-
   </div>
 </template>
 
@@ -37,15 +36,14 @@
 import { GetPubicList, Paper } from '@/apis/Paper';
 import { GetCourse } from '@/apis/Paper.ts';
 import LSvgIcon from '@/components/system/LSvgIcon.vue';
-import { onMounted, reactive, ref } from 'vue';
+import { getCurrentInstance, onMounted, reactive } from 'vue';
 import { useRouter } from "vue-router";
-import SearchRow from '../components/SearchRow.vue';
+const $filter = getCurrentInstance()?.appContext.config.globalProperties.$filter;
 const router = useRouter();
 
 const searchList = reactive({
   course: [],
   grade: [],
-  term: [],
   bookType: [],
   data: []
 })
@@ -65,7 +63,6 @@ const state = reactive({
   isFinished: false,
 })
 
-
 onMounted(async () => {
   const { data: { checkGrade, checkTerm, list } } = await GetCourse();
   params.grade = checkGrade;
@@ -82,10 +79,9 @@ const getList = async () => {
   }
   params.page += 1;
   state.list = state.list.concat(data);
-  state.total = total;
+  state.total = total!;
   state.isLoading = false;
   if (state.list.length >= state.total) {
-    console.log(state.list.length, state.total, state.list.length >= state.total);
     state.isFinished = true;
   }
 }
@@ -101,7 +97,7 @@ const onRefresh = () => {
 
 const toInfo = (item: Paper.IPaperItem) => {
   router.push({
-    path: '/pro/paper/info',
+    path: '/paper/info',
     query: {
       id: item.id
     }

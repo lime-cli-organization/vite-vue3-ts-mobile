@@ -22,9 +22,10 @@
 import { onMounted, reactive } from 'vue';
 import { GetImageCode, Login } from "@/apis/Authorize";
 import { useRouter } from 'vue-router';
-import { setCookie } from '@/utils/storage';
+import { useUser } from '@/store/modules/User'
 
 const router = useRouter();
+const userStore = useUser();
 
 const loginForm = reactive({
   username: '',
@@ -51,9 +52,9 @@ const getImageCode = async () => {
 
 const login = async () => {
   const { data: token } = await Login(loginForm)
-  setCookie('token', token)
+  userStore.setUserInfo(token[0]);
   router.push({
-    path: '/pro/home'
+    path: '/home'
   })
 }
 

@@ -30,6 +30,13 @@
 import { reactive, ref } from "vue";
 import type { FieldRule } from "vant";
 import LRadio from "@/components/system/LRadio.vue";
+
+const props = defineProps({
+  name: String
+})
+console.log(props.name);
+
+
 const form = reactive({
   name: '',
   mobile: '',

@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import type { AxiosRequestConfig } from 'axios';
 import { Notify } from 'vant';
 import { getCookie } from '@/utils/storage';
+import { IResultData } from './IRequest';
 
 const config: AxiosRequestConfig = {
   baseURL: '', //http://114.55.115.86:8001
