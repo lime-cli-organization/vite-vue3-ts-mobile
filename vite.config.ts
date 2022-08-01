@@ -15,6 +15,8 @@ import Components from 'unplugin-vue-components/vite';
 import { VantResolver } from 'unplugin-vue-components/resolvers';
 // 使用jsx
 import vueJsx from '@vitejs/plugin-vue-jsx';
+// 定义组件的name属性
+import DefineOptions from 'unplugin-vue-define-options/vite';
 
 // baseURL
 import { authorization, api } from './public/config/baseUrl.js';
@@ -76,6 +78,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     },
     plugins: [
       vue(),
+      DefineOptions(),
       vueJsx(),
       VueSetupExtend(),
       createSvgIconsPlugin({

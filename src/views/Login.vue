@@ -22,10 +22,10 @@
 import { onMounted, reactive } from 'vue';
 import { GetImageCode, Login } from "@/apis/Authorize";
 import { useRouter } from 'vue-router';
-import { useUser } from '@/store/modules/User'
+import { useUserStore } from '@/store/modules/User'
 
 const router = useRouter();
-const userStore = useUser();
+const userStore = useUserStore();
 
 const loginForm = reactive({
   username: '',
@@ -41,6 +41,7 @@ const imageState = reactive({
 })
 
 onMounted(async () => {
+  // userStore.logOut();
   await getImageCode();
 })
 
@@ -52,9 +53,10 @@ const getImageCode = async () => {
 
 const login = async () => {
   const { data: token } = await Login(loginForm)
-  userStore.setUserInfo(token[0]);
+  userStore.setToken(token[0]);
+  userStore.setBindInfo();
   router.push({
-    path: '/home'
+    path: '/index'
   })
 }
 

@@ -1,6 +1,7 @@
 <template>
   <div class="search">
-    <!-- <SearchRow v-if="searchList.data.length > 0" :data="searchList.data" :index="0" /> -->
+    <LSearch v-if="searchList.data.length > 0" :data="searchList.data" :index="0" key-field="id" label-fieled="name"
+      children-field="list" />
   </div>
   <div class="list">
     <van-pull-refresh v-model="state.isRefreshing" @refresh="onRefresh">
@@ -38,6 +39,7 @@ import { GetCourse } from '@/apis/Paper.ts';
 import LSvgIcon from '@/components/system/LSvgIcon.vue';
 import { getCurrentInstance, onMounted, reactive } from 'vue';
 import { useRouter } from "vue-router";
+import LSearch from '@/components/system/LSearch';
 const $filter = getCurrentInstance()?.appContext.config.globalProperties.$filter;
 const router = useRouter();
 

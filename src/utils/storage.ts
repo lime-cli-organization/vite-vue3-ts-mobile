@@ -22,3 +22,11 @@ export const getCookie: (name: string) => any = (name) => {
 export const removeCookie: (name: string) => void = (name) => {
   setCookie(name, '1', -1);
 };
+
+export const setLocalStorage = (key: string, value: any) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const getLocalStorage = (key: string) => {
+  return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key) as string) : {};
+};

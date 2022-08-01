@@ -2,15 +2,15 @@
   <div class="wrapper">
     <div class="info">
       <div class="left">
-        <van-image round width=".88rem" height=".88rem" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+        <van-image round width=".88rem" height=".88rem" :src="getHeadImg()" />
         <div>
           <div class="name">
-            <span>{{ userInfo.RealName }}</span>
+            <span>{{ userInfo.nickName }}</span>
           </div>
           <div class="address">
-            <span>杭州大禹小学</span>
-            <span>四六班</span>
-            <span>黄灿灿</span>
+            <span>{{ userInfo.schoolName }}</span>
+            <span>{{ userInfo.className }}</span>
+            <span>{{ userInfo.name }}</span>
           </div>
         </div>
       </div>
@@ -20,7 +20,11 @@
         </div>
       </div>
     </div>
-    <div class="banner"></div>
+    <div class="banner">
+      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" lazy-render>
+        <van-swipe-item v-for="item in 5">{{ item }}</van-swipe-item>
+      </van-swipe>
+    </div>
     <div class="grid">
       <div class="item">
         <img src="" alt="" />
@@ -53,22 +57,63 @@
     </div>
     <div class="chart_wrapper">
       <div class="title">双基掌握走势</div>
-      <div class="content"></div>
+      <div class="content">
+        <LEcharts id="chart1" :option="option" />
+      </div>
     </div>
     <div class="chart_wrapper">
       <div class="title">我的错题数</div>
-      <div class="content"></div>
+      <div class="content">
+        <LEcharts id="chart2" :option="option" />
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import * as echarts from 'echarts';
+import LEcharts from "@/components/system/LECharts/Index.vue";
 import { useRouter } from 'vue-router';
-import { useUser } from '@/store/modules/User'
-const userStore = useUser();
-const userInfo = userStore.parseToken;
+import { useUserStore } from '@/store/modules/User'
+import { onMounted, reactive } from 'vue';
+import { GetExamChart } from '@/apis/Exam';
+const userStore = useUserStore();
+const userInfo = userStore.userInfo;
+
+const option = reactive({
+  xAxis: {
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri',]
+  },
+  series: [
+    {
+      data: [65, 72, 90, 95, 88,],
+      type: 'line',
+      itemStyle: {
+        color: '#FF861B',
+      },
+      areaStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+          offset: 0,
+          color: 'rgba(255,134,27,0.3)',
+        },
+        {
+          offset: 1,
+          color: 'rgba(255,255,255,0.15)',
+        },
+        ]),
+      },
+    }
+  ]
+})
+
+onMounted(() => {
+  getExamChart()
+})
+
+const getExamChart = async () => {
+  const { data } = await GetExamChart({ course: '数学' })
+}
 
 const router = useRouter();
-
 const toPaperList = () => {
   router.push({
     path: '/paper/list'
@@ -79,6 +124,16 @@ const toCombineList = () => {
     path: '/exercise/combine/index'
   })
 }
+
+const getHeadImg = () => {
+  const { headImg } = userInfo;
+  if (headImg) {
+    return `http://114.55.115.86:8003/${headImg}`;
+  } else {
+    return 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg';
+  }
+
+}
 </script>
 <style lang="less" scoped>
 .wrapper {
@@ -86,6 +141,7 @@ const toCombineList = () => {
   padding: 18px 40px;
   padding-bottom: 150px;
 }
+
 
 .info {
   display: flex;
@@ -145,8 +201,16 @@ const toCombineList = () => {
   margin-top: 38px;
   width: 100%;
   height: 260px;
-  background: #3C3C5A;
   border-radius: 30px;
+  overflow: hidden;
+}
+
+.my-swipe .van-swipe-item {
+  color: #fff;
+  font-size: 20px;
+  line-height: 130px;
+  text-align: center;
+  background-color: #39a9ed;
 }
 
 .grid {

@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     LCheckboxGroup: typeof import('./src/components/system/LCheckboxGroup.vue')['default']
     LECharts: typeof import('./src/components/system/LECharts/LECharts.vue')['default']
     LRadio: typeof import('./src/components/system/LRadio.vue')['default']
+    LSearch: typeof import('./src/components/system/LSearch/src/LSearch.vue')['default']
     LSvgIcon: typeof import('./src/components/system/LSvgIcon.vue')['default']
     LTabbar: typeof import('./src/components/system/LTabbar/LTabbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -34,6 +35,8 @@ declare module '@vue/runtime-core' {
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
     VanRadio: typeof import('vant/es')['Radio']
     VanRadioGroup: typeof import('vant/es')['RadioGroup']
+    VanSwipe: typeof import('vant/es')['Swipe']
+    VanSwipeItem: typeof import('vant/es')['SwipeItem']
   }
 }
 

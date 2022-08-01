@@ -8,9 +8,18 @@ import {
 import type { IRouteRecordRaw } from 'vue-router';
 import md5 from 'js-md5';
 
+const scrollBehavior = function scrollBehavior(to: RouteLocationNormalizedLoaded, from:RouteLocationNormalizedLoaded) {
+  return { left: 0, top: 0 }
+};
 export const router: Router = createRouter({
   history: createWebHashHistory(),
   routes: [
+    {
+      path: '/',
+      redirect: {
+        name: 'Login',
+      },
+    },
     {
       path: '/login',
       name: 'Login',
@@ -22,10 +31,6 @@ export const router: Router = createRouter({
     //--------------------分类目录-----练习--------------------
     {
       path: '/exercise',
-      name: 'exercise',
-      redirect: {
-        name: 'CombineList',
-      },
       component: () => import('@/views/Layout.vue'),
       children: [
         {
@@ -43,40 +48,37 @@ export const router: Router = createRouter({
             };
           },
         },
-      ],
-    },
-
-    {
-      component: () => import('@/views/Layout.vue'),
-      redirect: '/home',
-      children: [
         {
-          path: '/home',
-          name: 'Home',
-          component: () => import('@/views/home/Home.vue'),
-        },
-        {
-          path: '/exercise/panel',
+          path: 'panel',
           name: 'Pannel',
           component: () => import('@/views/exercise/Panel.vue'),
         },
+      ],
+    },
+    //--------------------分类目录-----报告--------------------
+    {
+      path: '/report',
+      component: () => import('@/views/Layout.vue'),
+      children: [
         {
-          path: '/report/school',
+          path: 'school',
           name: 'ReportSchool',
           component: () => import('@/views/report/School.vue'),
         },
+      ],
+    },
+    //--------------------分类目录-----试卷--------------------
+    {
+      path: '/paper',
+      component: () => import('@/views/Layout.vue'),
+      children: [
         {
-          path: '/mine',
-          name: 'Mine',
-          component: () => import('@/views/mine/Mine.vue'),
-        },
-        {
-          path: '/paper/list',
+          path: 'list',
           name: 'PaperList',
           component: () => import('@/views/paper/List.vue'),
         },
         {
-          path: '/paper/info',
+          path: 'info',
           name: 'PaperInfo',
           component: () => import('@/views/paper/Info.vue'),
           meta: {
@@ -85,6 +87,37 @@ export const router: Router = createRouter({
         },
       ],
     },
+    //
+    {
+      path: '/home',
+      component: () => import('@/views/Layout.vue'),
+      redirect: {
+        name: 'Home',
+      },
+      children: [
+        {
+          path: '/index',
+          name: 'Home',
+          component: () => import('@/views/home/Home.vue'),
+        },
+      ],
+    },
+    //--------------------分类目录-----我的信息--------------------
+    {
+      path: '/mine',
+      component: () => import('@/views/Layout.vue'),
+      redirect: {
+        name: 'Mine',
+      },
+      children: [
+        {
+          path: '/mine',
+          name: 'Mine',
+          component: () => import('@/views/mine/Mine.vue'),
+        },
+      ],
+    },
+    // 示例
     {
       path: '/example',
       name: 'Example',
@@ -94,4 +127,7 @@ export const router: Router = createRouter({
       },
     },
   ] as unknown as IRouteRecordRaw[],
+  scrollBehavior(to, from, savedPosition) {
+    scrollBehavior(to, from) // savedPosition:只有是popstate【浏览器的后退/前进按钮触发】
+  }
 } as RouterOptions);

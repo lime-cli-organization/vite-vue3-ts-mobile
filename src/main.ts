@@ -35,6 +35,8 @@ import {
   Calendar,
   PullRefresh,
   List,
+  Swipe,
+  SwipeItem,
 } from 'vant';
 // ant 中有个别组件是以函数的形式提供的，包括 Toast，Dialog，Notify 和 ImagePreview 组件。
 // 在使用函数组件时，unplugin-vue-components 无法自动引入对应的样式，因此需要手动引入样式。
@@ -54,6 +56,9 @@ app
   .use(Calendar)
   .use(PullRefresh)
   .use(List)
+  .use(Swipe)
+  .use(SwipeItem)
+  .use(Picker)
   .use(Notify);
 
 // 挂载全局自定义变量
@@ -61,7 +66,6 @@ app
 
 // dayjs
 import dayjs from 'dayjs';
-import { Vue } from 'vue-demi';
 // 全局过滤器
 app.config.globalProperties.$filter = {
   format(value: number, format: string = 'YYYY-MM-DD HH:mm:ss') {
