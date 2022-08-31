@@ -43,11 +43,11 @@
         one
       </div>
       <div class="item" @click="toPaperList">
-        <img src="@/assets/link5.png" alt="甄选套卷" />
+        <img :src="theme.homeGrid5" alt="甄选套卷" />
         甄选套卷
       </div>
       <div class="item" @click="toCombineList">
-        <img src="@/assets/link6.png" alt="智能组卷" />
+        <img :src="theme.homeGrid6" alt="智能组卷" />
         智能组卷
       </div>
     </div>
@@ -74,10 +74,14 @@ import * as echarts from 'echarts';
 import LEcharts from "@/components/system/LECharts/Index.vue";
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/modules/User'
-import { onMounted, reactive } from 'vue';
+import { getCurrentInstance, onMounted, reactive } from 'vue';
 import { GetExamChart } from '@/apis/Exam';
 const userStore = useUserStore();
 const userInfo = userStore.userInfo;
+
+const theme = getCurrentInstance()?.appContext.config.globalProperties.$theme
+console.log(theme);
+
 
 const option = reactive({
   xAxis: {

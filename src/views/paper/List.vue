@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <LSearch v-if="searchList.data.length > 0" :data="searchList.data" :index="0" key-field="id" label-fieled="name"
-      children-field="list" />
+      children-field="list" :value="selectValue" @change="searchChange" />
   </div>
   <div class="list">
     <van-pull-refresh v-model="state.isRefreshing" @refresh="onRefresh">
@@ -37,19 +37,22 @@
 import { GetPubicList, Paper } from '@/apis/Paper';
 import { GetCourse } from '@/apis/Paper.ts';
 import LSvgIcon from '@/components/system/LSvgIcon.vue';
-import { getCurrentInstance, onMounted, reactive } from 'vue';
+import { getCurrentInstance, onMounted, reactive, ref } from 'vue';
 import { useRouter } from "vue-router";
 import LSearch from '@/components/system/LSearch';
+import { Key } from '@/components/system/LSearch/src/LSearch';
 const $filter = getCurrentInstance()?.appContext.config.globalProperties.$filter;
 const router = useRouter();
 
+const selectValue = ref<Key[]>([2, '一年级', '上册', '全部'])
+// 搜索条件下拉
 const searchList = reactive({
   course: [],
   grade: [],
   bookType: [],
   data: []
 })
-
+// 搜索条件
 const params = reactive({
   levelId: 0,
   paperTypeId: 0,
@@ -57,6 +60,7 @@ const params = reactive({
   page: 1,
   term: ''
 })
+
 const state = reactive({
   list: [] as Paper.IPaperItem[],
   total: 0,
@@ -73,7 +77,7 @@ onMounted(async () => {
   searchList.data = list;
   getList();
 })
-
+// 数据获取
 const getList = async () => {
   const { data, total } = await GetPubicList(params);
   if (data.length === 0) {
@@ -87,13 +91,17 @@ const getList = async () => {
     state.isFinished = true;
   }
 }
-
+// 下拉刷新
 const onRefresh = () => {
   params.page = 1;
   state.list = [];
   state.isRefreshing = false;
   state.isLoading = true;
   getList();
+}
+
+const searchChange = (data: Key[]) => {
+  console.log(data);
 }
 
 
@@ -113,42 +121,42 @@ const toInfo = (item: Paper.IPaperItem) => {
 }
 
 .item {
-  width: 674px;
-  box-sizing: border-box;
-  padding: 38px;
-  margin: 0 auto 24px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  width: 674px;
+  margin: 0 auto 24px;
+  padding: 38px;
   background: #FFFFFF;
-  box-shadow: 0px 8px 21px 1px #E9ECF4;
   border-radius: 30px;
+  box-shadow: 0 8px 21px 1px #E9ECF4;
 
   .top {
     color: @textPrimary;
     font-weight: bold;
-    line-height: 1.5;
     font-size: 30px;
+    line-height: 1.5;
 
     .tag {
+      float: left;
       margin-right: 10px;
       padding: 0 18px;
+      color: #49A3FF;
+      font-size: 20px;
       background: #EAF4FF;
       border: 1px solid #49A3FF;
       border-radius: 16px;
-      font-size: 20px;
-      color: #49A3FF;
-      float: left;
     }
   }
 
   .bottom {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
     .left {
-      font-size: 20px;
       color: #C2C4CC;
+      font-size: 20px;
     }
 
     .right {

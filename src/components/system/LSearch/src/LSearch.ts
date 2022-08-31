@@ -30,7 +30,7 @@ export const LSearchProps = {
     type: String,
     default: 'children'
   },
-  defaultExpandedKeys: {
+  value: {
     type: Array as PropType<Key[]>,
     default: []
   },

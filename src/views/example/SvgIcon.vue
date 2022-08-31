@@ -17,6 +17,6 @@ const mouseleave = () => {
 
 <style lang="less" scoped>
 .svg_extenal {
-  color: red;
+  color: #FF0000;
 }
 </style>

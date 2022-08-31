@@ -72,13 +72,13 @@ const parseData = (list: Paper.ITopicItem[] | undefined) => {
 .wrapper {
   width: 672px;
   margin: 0 auto;
-  padding-bottom: 150px;
   padding-top: 24px;
+  padding-bottom: 150px;
 
   .title {
     color: @textPrimary;
-    font-size: 30px;
     font-weight: bold;
+    font-size: 30px;
   }
 }
 </style>

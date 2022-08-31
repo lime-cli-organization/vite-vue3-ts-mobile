@@ -77,7 +77,6 @@ onBeforeUnmount(() => {
 watch(
   () => props.option,
   () => {
-    console.log('props.option', props.option);
     chart.setOption(_.merge(props.option, defaulOption))
   },
   { deep: true }

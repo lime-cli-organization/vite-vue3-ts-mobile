@@ -1,6 +1,6 @@
 
-<template> 
-  <LSvgIcon name="home"  />
+<template>
+  <LSvgIcon name="home" />
 </template>
 
 <script setup lang="ts">

@@ -26,8 +26,8 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
   const isBuild = command === 'build';
   return {
     server: {
-      host: '192.168.15.3',
-      port: 3000,
+      // host: '192.168.15.3',
+      // port: 3000,
       open: true,
       proxy: {
         '/authorization': {

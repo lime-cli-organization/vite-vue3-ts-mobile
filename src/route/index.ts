@@ -11,6 +11,21 @@ import md5 from 'js-md5';
 const scrollBehavior = function scrollBehavior(to: RouteLocationNormalizedLoaded, from:RouteLocationNormalizedLoaded) {
   return { left: 0, top: 0 }
 };
+
+// 根据目录自动生成路由
+//递归获取 views 文件夹下的所有.vue文件
+const modulesFiles = import.meta.globEager("@/views/*.vue");
+const modules = Object.keys(modulesFiles).reduce((modules: Record<string, unknown>, modulePath) => {
+  const moduleName = modulePath.replace(/^\.\/views\/(.*)\.\w+$/, '$1');
+  const value = modulesFiles[modulePath];
+  modules[moduleName] = value.default;
+  return modules
+}, {})
+console.log(modules);
+
+
+
+
 export const router: Router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -127,7 +142,7 @@ export const router: Router = createRouter({
       },
     },
   ] as unknown as IRouteRecordRaw[],
-  scrollBehavior(to, from, savedPosition) {
-    scrollBehavior(to, from) // savedPosition:只有是popstate【浏览器的后退/前进按钮触发】
-  }
-} as RouterOptions);
+  // scrollBehavior(to, from, savedPosition) {
+  //   scrollBehavior(to, from) // savedPosition:只有是popstate【浏览器的后退/前进按钮触发】
+  // }
+} as unknown as RouterOptions);

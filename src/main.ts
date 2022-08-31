@@ -62,7 +62,13 @@ app
   .use(Notify);
 
 // 挂载全局自定义变量
-// app.config.globalProperties
+app.config.globalProperties.$data = {
+
+}
+
+// 全局主题
+import { setTheme } from './styles/config';
+app.config.globalProperties.$theme = setTheme('orange')
 
 // dayjs
 import dayjs from 'dayjs';
